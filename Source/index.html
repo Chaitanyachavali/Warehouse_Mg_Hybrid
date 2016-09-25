@@ -8,7 +8,39 @@
   <script src="js/jquery-3.1.0.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script>
-    // Submitting the form 
+   $(document).ready(function(){
+      $("#submit").click(function(){
+          var user_id = $("#user_id").val();
+          var password = $("#password").val();
+          var role_id = $("#role_id").val();
+          var dataString = 'user_id='+ user_id + '&password='+ password + '&role_id='+ role_id;
+          if(user_id==''||password==''||role_id=='')
+            {
+              alert("All Feilds are required");
+            }
+          else
+            {
+              $.ajax({
+                      type: "POST",
+                      url: "http://172.19.20.172/client_sg/login.php",
+                      data: dataString,
+                      cache: false,
+                      success: function(result){
+                      //alert(result);
+                      if(result == 'Invalid Credentials')
+                        {
+                          alert("Invalid Credentials. Please Try Again.");
+                        }
+                        else
+                        {
+                          window.location.href ="profile.html";
+                        }
+                                                }
+                      });
+             }
+                      return false;
+              });
+          });
   </script>
 </head>
 <body background = "img/check1.jpg">
@@ -19,7 +51,7 @@
   <h2>Warehouse Management</h2>
   <br><br><br>
   <!-- Form Starts -->
-  <form id="submit_form">
+  <form id="form" method="POST">
     <div class="form-group">
       <label for="UserId">Username:</label>
       <input type="userid" class="form-control" id="user_id" name="user_id" placeholder="Enter User Id">
@@ -39,7 +71,7 @@
     <div class="checkbox">
       <label><input type="checkbox"> Remember me</label>
     </div>
-    <button type="submit" class="btn btn-primary dropdown-toggle">Submit</button>
+    <button type="submit" id="submit" class="btn btn-primary dropdown-toggle">Submit</button>
   </form>
   <!-- From Ends-->
 </div>
