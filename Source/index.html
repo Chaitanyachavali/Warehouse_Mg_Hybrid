@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Warehouse Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-3.1.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+    // Submitting the form 
+  </script>
+</head>
+<body background = "img/check1.jpg">
+
+<!-- Login Content Starts -->
+<div class="container">
+    <br> <br>
+  <h2>Warehouse Management</h2>
+  <br><br><br>
+  <!-- Form Starts -->
+  <form id="submit_form">
+    <div class="form-group">
+      <label for="UserId">Username:</label>
+      <input type="userid" class="form-control" id="user_id" name="user_id" placeholder="Enter User Id">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+    </div>
+    <div class="form-group">
+      <label for="roles">Select Role</label>
+      <select class="form-control" id="role_id" name="role_id">
+        <option value="1">Manager</option>
+        <option value="2">Field Engineer</option>
+        <option value="2">Dummy</option>      
+      </select>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-primary dropdown-toggle">Submit</button>
+  </form>
+  <!-- From Ends-->
+</div>
+<!-- Login Content Ends-->
+
+</body>
+</html>
+
