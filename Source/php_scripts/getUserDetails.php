@@ -6,12 +6,10 @@ mysql_connect("localhost", "root", ""); //connecting to database
 mysql_select_db("warehouse_mg");
 
 $user_id = $_POST['user_id'];
-$password = $_POST['password'];
-$role_id = $_POST['role_id'];
 
-if(isset($user_id) && isset($password) && isset($role_id))
+if(isset($user_id))
 {
-	$query = "select * from warehouse_mg.whm_users where user_id = '$user_id' and password = '$password' and role_id = $role_id";
+	$query = "select * from warehouse_mg.whm_users where user_id = '$user_id' ";
 
 	$output = mysql_query($query);
 
@@ -28,6 +26,7 @@ if(isset($user_id) && isset($password) && isset($role_id))
 		echo "Invalid";
 	}
 }
+
 
 
 
