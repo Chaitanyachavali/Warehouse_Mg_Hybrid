@@ -10,13 +10,14 @@
   <script>
    $(document).ready(function(){
       $("#submit").click(function(){
+          //var getvar = "temp";
           var user_id = $("#user_id").val();
           var password = $("#password").val();
           var role_id = $("#role_id").val();
           var dataString = 'user_id='+ user_id + '&password='+ password + '&role_id='+ role_id;
           if(user_id==''||password==''||role_id=='')
             {
-              alert("All Feilds are required");
+              alert("Please fill all the fileds to continue.");
             }
           else
             {
@@ -27,15 +28,24 @@
                       cache: false,
                       success: function(result){
                       //alert(result);
-                      if(result == 'Invalid Credentials')
+                      if(result == 'Invalid')
                         {
                           alert("Invalid Credentials. Please Try Again.");
                         }
                         else
                         {
-                          window.location.href ="profile.html";
+                          window.localStorage.setItem('user_id', user_id);
+                          //getvar = window.localStorage.getItem('user_id');
+                          //alert(getvar);
+                          //window.localStorage.setItem('isLoggedIn', 'true');
+                          window.location.href = "profile.html";
                         }
-                                                }
+                                                },
+                        error: function(data){
+                          
+                          alert("Not able to connect to server");
+
+                               }
                       });
              }
                       return false;
@@ -65,7 +75,6 @@
       <select class="form-control" id="role_id" name="role_id">
         <option value="1">Manager</option>
         <option value="2">Field Engineer</option>
-        <option value="2">Dummy</option>      
       </select>
     </div>
     <div class="checkbox">
@@ -76,6 +85,8 @@
   <!-- From Ends-->
 </div>
 <!-- Login Content Ends-->
+
+
 
 </body>
 </html>

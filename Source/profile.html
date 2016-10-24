@@ -8,7 +8,32 @@
   <script src="js/jquery-3.1.0.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script>
-    /* code for submitting the form */
+   $(document).ready(function(){
+      var user_id = "temp";
+      user_id = window.localStorage.getItem('user_id');
+      var dataString = 'user_id='+ user_id;
+      $.ajax({
+                      type: "POST",
+                      url: "http://172.19.20.172/client_sg/getUserDetails.php",
+                      data: dataString,
+                      cache: false,
+                      success: function(result){
+                      if(result == 'Invalid')
+                        {
+                          alert("Incorrect Values");
+                        }
+                        else
+                        {
+                          alert(result);
+                        }
+                                                },
+                        error: function(data){
+                          
+                          alert("Unsufficient details. Not able to connect to server");
+
+                               }
+                      });
+});
   </script>
 </head>
 
