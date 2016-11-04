@@ -1,5 +1,4 @@
-+ Deployement  Process
-
+####Deployement  Process ####
 
 + Download and install phone gap
 + Create a project in the phonegap application
