@@ -1,3 +1,6 @@
++ Deployement  Process
+
+
 + Download and install phone gap
 + Create a project in the phonegap application
 + Find out the 'www' folder in your project (You can find it inside where the project is created)
