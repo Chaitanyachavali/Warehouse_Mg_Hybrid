@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Warehouse Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-3.1.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/canvasjs.min.js"></script>
+  <script>
+    /* code for submitting the form */
+  </script>
+  <script type="text/javascript">
+window.onload = function () {
+  var chart = new CanvasJS.Chart("chartContainer",
+  {
+    theme: "theme2",
+    title:{
+      text: "Piecharts"
+    },
+    data: [
+    {
+      type: "pie",
+      showInLegend: true,
+      toolTipContent: "{y} - #percent %",
+      yValueFormatString: "#0.#,,. Million",
+      legendText: "{indexLabel}",
+      dataPoints: [
+        {  y: 4181563, indexLabel: "ERP Product 1" },
+        {  y: 2175498, indexLabel: "ERP Product 2" },
+        {  y: 3125844, indexLabel: "ERP Product 3" },
+        {  y: 1176121, indexLabel: "ERP Product 4"},
+        {  y: 1727161, indexLabel: "ERP Product 5" },
+        {  y: 4303364, indexLabel: "ERP Product 6"},
+        {  y: 1717786, indexLabel: "ERP Product 7"}
+      ]
+    }
+    ]
+  });
+  chart.render();
+}
+  </script>
+</head>
+
+<body background = "img/check1.jpg">
+<br>
+<div class="container">
+  <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container"> 
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control"  placeholder="Search" >
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>  
+                    </span>
+                </div>
+            </div>
+        </div>
+  </div>
+  <br>
+</div>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">HCL ERP</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="profile.html">Profile</a></li>
+            <li class="active" ><a href="erp_products.html">Products</a></li>
+            <li><a href="#">Purchase Orders</a></li>
+            <li><a href="#">Sales Orders</a></li>
+            <li><a href="#">Warehouse Management</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+
+<div id="chartContainer" style="height: 400px; width: 100%;"></div>
+
+</body>
+</html>
+
