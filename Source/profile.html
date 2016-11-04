@@ -24,7 +24,18 @@
                         }
                         else
                         {
-                          alert(result);
+                          var user = JSON.parse(result);
+                          //alert(z.user_name);
+                          //console.log(result)
+                          var details = '<div id="user_values" class="jumbotron">'
+                                  +'<h2>Profile</h2>'
+                                  +'<p> Name : '+ user.user_name +'</p>'
+                                  +'<p> Role : '+ user.role_id +'</p>'
+                                  +'<p> Working Zone : '+ user.working_zone+'</p>'
+                                  +'<p> Phone Number : '+user.contact+'</p>'
+                                  +'<p> Address : '+ user.address+ '</p>'
+                                  +'</div>';
+                          $('#user_details').append(details);
                         }
                                                 },
                         error: function(data){
@@ -33,6 +44,7 @@
 
                                }
                       });
+
 });
   </script>
 </head>
@@ -77,10 +89,10 @@
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container" id="user_details">
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
+    <!--   <div id="user_values" class="jumbotron">
         <h2>Profile</h2>
         <p> Name : User1</p>
         <p> Role : Manager</p>
@@ -88,7 +100,7 @@
         <p> Phone Number : 9123456789</p>
         <p> Address : Hyderabad</p>
       </div>
-
+ -->
     </div> <!-- /container -->
 
 
