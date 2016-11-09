@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/jquery-3.1.0.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script>
+  <script type="text/javascript">
     $(document).ready(function(){
       var user_id = "temp";
       user_id = window.localStorage.getItem('user_id');
@@ -31,9 +31,9 @@
                           {
                             for(i in products)
                             {
-                              var display_products = '<div class="panel panel-primary">'
+                              var display_products = '<div class="panel panel-primary" id="product_display">'
                                                     +'<div class="panel-heading">'
-                                                    +'<h3 class="panel-title">'+products[i].product_name+'</h3>'
+                                                    +'<h3 class="panel-title" id="h3_name">'+products[i].product_name+'</h3>'
                                                     +'</div>'
                                                     +'<div class="panel-body">'+products[i].product_type+'</div>'
                                                     +'</div>'; 
@@ -58,6 +58,15 @@
 
                                }
                       });
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).on("click", "#h3_name", function(){
+      var product = $(this).parents('#product_display').find('h3').text();
+      //alert(product);
+      window.localStorage.setItem('selected_product', product);
+      window.location.href = "product_details.html";
+
     });
   </script>
 </head>
@@ -95,7 +104,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="profile.html">Profile</a></li>
             <li class="active" ><a href="erp_products.html">Products</a></li>
-            <li><a href="#">Purchase Orders</a></li>
+            <li><a href="purchase_order.html">Purchase Orders</a></li>
             <li><a href="#">Sales Orders</a></li>
             <li><a href="#">Warehouse Management</a></li>
           </ul>
