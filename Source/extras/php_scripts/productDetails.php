@@ -6,10 +6,11 @@ mysql_connect("localhost", "root", ""); //connecting to database
 mysql_select_db("warehouse_mg");
 
 $user_id = $_POST['user_id'];
+$product = $_POST['product'];
 
-if(isset($user_id))
+if(isset($user_id) && isset($product))
 {
-	$query = "select * from warehouse_mg.whm_users where user_id = '$user_id' ";
+	$query = "select * from warehouse_mg.whm_products where product_name = '$product' ";
 
 	$output = mysql_query($query);
 
@@ -26,6 +27,7 @@ if(isset($user_id))
 		echo "Invalid";
 	}
 }
+
 
 
 ?>

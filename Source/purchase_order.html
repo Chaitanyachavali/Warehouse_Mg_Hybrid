@@ -9,47 +9,17 @@
   <script src="js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function(){
-      var user_id = "temp";
       var product = "temp";
-      user_id = window.localStorage.getItem('user_id');
       product = window.localStorage.getItem('selected_product');
-      var dataString = 'user_id='+ user_id + '&product='+ product;
-      $.ajax({
-                      type: "POST",
-                      url: "http://172.19.20.172/client_sg/getPurchaseOrders.php",
-                      data: dataString,
-                      cache: false,
-                      success: function(result){
-                      if(result == 'Invalid')
-                        {
-                          alert("Incorrect Values");
-                        }
-                        else
-                        {
-                          var purchases = JSON.parse(result);
-                          //alert(z.user_name);
-                          //console.log(result)
-                          var details = '<div id="product_details" class="jumbotron">'
-                                        +'<h2>Product Details</h2>'
-                                        +'<p> Product Name : '+ product.product_name +'</p>'
-                                        +'<p> Product Type : '+ product.product_type +'</p>'
-                                        +'<p> Product Description : '+ product.desc +'</p>'
-                                        +'<button type = "button" class = "btn btn-primary">Purchase Orders</button> <br> <br>'
-                                        +'<button type = "button" class = "btn btn-primary">Sales Orders</button> <br> <br>'
-                                        +'<button type = "button" class = "btn btn-primary">Warehouse Management</button>'
+                          var details = '<div class="jumbotron">'
+                                        +'<h2>Product Selected: '+ product +'</h2>'
+                                        +'<h3>Select Report Type</h3><br>'
+                                        +'<button type = "button" class = "btn btn-primary">List of Sales Order</button> <br> <br>'
+                                        +'<button type = "button" class = "btn btn-primary">Sales Order Status</button> <br> <br>'
+                                        +'<button type = "button" class = "btn btn-primary">Sales Order with different payment</button>'
                                         +'</div>';
                           $('#product_details').append(details);
-                        }
-                                                },
-                        error: function(data){
-                          
-                          alert("Unsufficient details. Not able to connect to server");
-
-                               }
-                      });
-
-});
-
+    });
   </script>
 </head>
 
@@ -94,6 +64,7 @@
       </div>
     </nav>
     
-    <div class="container" id="product_details"> </div>
+    <div class="container" id="product_details">
+
 </body>
 </html>

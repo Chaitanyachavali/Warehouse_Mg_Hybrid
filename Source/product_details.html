@@ -34,7 +34,7 @@
                                         +'<p> Product Name : '+ product.product_name +'</p>'
                                         +'<p> Product Type : '+ product.product_type +'</p>'
                                         +'<p> Product Description : '+ product.desc +'</p>'
-                                        +'<button type = "button" class = "btn btn-primary">Purchase Orders</button> <br> <br>'
+                                        +'<button type = "button" class = "btn btn-primary" id = "purchaseBtn">Purchase Orders</button> <br> <br>'
                                         +'<button type = "button" class = "btn btn-primary">Sales Orders</button> <br> <br>'
                                         +'<button type = "button" class = "btn btn-primary">Warehouse Management</button>'
                                         +'</div>';
@@ -47,9 +47,12 @@
 
                                }
                       });
-
 });
-
+  </script>
+  <script type="text/javascript">
+    $(document).on("click", "#purchaseBtn", function(){
+      window.location.href = "purchase_order.html";
+    });
   </script>
 </head>
 
