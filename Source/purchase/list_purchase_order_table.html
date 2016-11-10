@@ -4,11 +4,11 @@
   <title>Warehouse Management</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <script src="js/jquery-3.1.0.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src="../js/jquery-3.1.0.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
   <script>
-    $(document).ready(function(){
+     $(document).ready(function(){
       var user_id = "temp";
       var product = "temp";
       user_id = window.localStorage.getItem('user_id');
@@ -16,7 +16,7 @@
       var dataString = 'user_id='+ user_id + '&product='+ product;
       $.ajax({
                       type: "POST",
-                      url: "http://172.19.20.172/client_sg/productDetails.php",
+                      url: "http://172.19.20.172/client_sg/getPurchaseOrders.php",
                       data: dataString,
                       cache: false,
                       success: function(result){
@@ -26,19 +26,31 @@
                         }
                         else
                         {
-                          var product = JSON.parse(result);
-                          //alert(z.user_name);
-                          //console.log(result)
-                          var details = '<div id="product_details" class="jumbotron">'
-                                        +'<h2>Product Details</h2>'
-                                        +'<p> Product Name : '+ product.product_name +'</p>'
-                                        +'<p> Product Type : '+ product.product_type +'</p>'
-                                        +'<p> Product Description : '+ product.desc +'</p>'
-                                        +'<button type = "button" class = "btn btn-primary" id = "purchaseBtn">Purchase Orders</button> <br> <br>'
-                                        +'<button type = "button" class = "btn btn-primary" id = "salesBtn">Sales Orders</button> <br> <br>'
-                                        +'<button type = "button" class = "btn btn-primary" id = "warehouseBtn">Warehouse Management</button>'
-                                        +'</div>';
-                          $('#product_details').append(details);
+                          var purchase = JSON.parse(result);
+                          //alert(purchase.length);
+                          if(purchase.length > 0)
+                          {
+                            for(i in purchase)
+                            {
+                              var display_table = '<tr>'
+                                                  +'<td>'+purchase[i].purchase_id+'</td>'
+                                                  +'<td>'+purchase[i].date_init+'</td>'
+                                                  +'<td>'+purchase[i].purchase_by+'</td>'
+                                                  +'<td>'+purchase[i].date_recv+'</td>'
+                                                  +'</tr>'; 
+                            $('#tbody_display').append(display_table);
+                           }
+                          }
+                          else
+                          {
+                            var display_table = '<tr>'
+                                                +'<td>No Data</td>'
+                                                +'<td>No Data</td>'
+                                                +'<td>No Data</td>'
+                                                +'<td>No Data</td>'
+                                                +'</tr>'; 
+                            $('#tbody_display').append(display_table);
+                          }
                         }
                                                 },
                         error: function(data){
@@ -49,24 +61,10 @@
                       });
 });
   </script>
-  <script type="text/javascript">
-    $(document).on("click", "#purchaseBtn", function(){
-      window.location.href = "purchase/purchase_order.html";
-    });
-  </script>
-    <script type="text/javascript">
-    $(document).on("click", "#salesBtn", function(){
-      window.location.href = "sales/sales_order.html";
-    });
-  </script>
-  <script type="text/javascript">
-    $(document).on("click", "#warehouseBtn", function(){
-      window.location.href = "warehouse/warehouse_mg.html";
-    });
-  </script>
+
 </head>
 
-<body background = "img/check1.jpg">
+<body background = "../img/check1.jpg">
 <br>
 <div class="container">
   <div class="row">
@@ -107,6 +105,37 @@
       </div>
     </nav>
     
-    <div class="container" id="product_details"> </div>
+  <div class="container" id="display_table">
+  <h2>Selected Product : ERP Product 1</h2>
+  <p>List of Purchase Orders (Table)</p>
+  <div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Purchase ID</th>
+        <th>Date Initated</th>
+        <th>Purchase By</th>
+        <th>Date Recevied</th>
+      </tr>
+    </thead>
+    <tbody id="tbody_display">
+      <!--<tr>
+        <td>0</td>
+        <td>2016-11-09</td>
+        <td>xyz</td>
+        <td>2016-11-09</td>
+      </tr> -->
+    </tbody>
+  </table>
+  </div>
+</div>
+<div class="container">
+    <a href="list_purchase_order_pie.html" class="btn btn-primary btn-lg">
+      <span class="glyphicon glyphicon-dashboard"></span> Check the reports as Pie Charts
+    </a> <br> <br>
+    <a href="list_purchase_order_bar.html" class="btn btn-primary btn-lg">
+      <span class="glyphicon glyphicon-stats"></span> Check the reports as Bar Charts
+    </a> <br> <br>
+</div>
 </body>
 </html>
