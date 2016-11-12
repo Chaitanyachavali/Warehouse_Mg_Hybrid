@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <script src="../js/jquery-3.1.0.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
-  <script>
+  <script src="../js/chart.bundle.min.js"></script>
+  <script src="../js/chart.min.js"></script>
+  <script type="text/javascript">
      $(document).ready(function(){
       var user_id = "temp";
       var product = "temp";
@@ -16,7 +18,7 @@
       var dataString = 'user_id='+ user_id + '&product='+ product;
       $.ajax({
                       type: "POST",
-                      url: "http://172.19.20.172/client_sg/getPurchaseOrders.php",
+                      url: "http://172.19.20.172/client_sg/getPurchaseOrdersGraph.php",
                       data: dataString,
                       cache: false,
                       success: function(result){
@@ -26,7 +28,52 @@
                         }
                         else
                         {
-
+                            var data = JSON.parse(result);
+                            var date = [];
+                            var count = [];
+                            var i = 0;
+                            for(i in data)
+                            {
+                              date.push(data[i].date_init);
+                              count.push(data[i].count);
+                            }
+                            var ctx = $("#barChart");
+                            var barChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: date,
+                                    datasets: [{
+                                        label: 'List of Purchases',
+                                        data: count,
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero:true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
                         }
                                                 },
                         error: function(data){
@@ -37,6 +84,11 @@
                       });
 });
   </script>
+<style type="text/css">
+#chartColor {
+    background-color: white;
+            }
+</style>
 
 </head>
 
@@ -57,7 +109,9 @@
             </div>
         </div>
   </div>
+
   <br>
+
 </div>
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -80,16 +134,19 @@
         </div>
       </div>
     </nav>
-    
-  <div class="container" id="display_bar">
-</div>
+
+<div id="chartColor">
+    <canvas id="barChart"></canvas>
+</div><br><br>
+
 <div class="container">
-    <a href="list_purchase_order_table.html" class="btn btn-primary btn-lg">
+    <a href="list_purchase_order_pie.html" class="btn btn-primary btn-lg">
       <span class="glyphicon glyphicon-list"></span> Check the reports as Tables
     </a> <br> <br>
     <a href="list_purchase_order_pie.html" class="btn btn-primary btn-lg">
       <span class="glyphicon glyphicon-dashboard"></span> Check the reports as Pie Charts
     </a> <br> <br>
 </div>
+
 </body>
 </html>
