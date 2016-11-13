@@ -7,8 +7,12 @@
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <script src="../js/jquery-3.1.0.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/chart.bundle.min.js"></script>
-  <script src="../js/chart.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.jqplot.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.barRenderer.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.pieRenderer.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.pointLabels.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/jquery.jqplot.css" />
   <script type="text/javascript">
      $(document).ready(function(){
       var user_id = "temp";
@@ -29,51 +33,73 @@
                         else
                         {
                             var data = JSON.parse(result);
-                            var date = [];
-                            var count = [];
+                            var ticks = [];
+                            var s1 = [];
                             var i = 0;
                             for(i in data)
                             {
-                              date.push(data[i].date_init);
-                              count.push(data[i].count);
-                            }
-                            var ctx = $("#barChart");
-                            var barChart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: date,
-                                    datasets: [{
-                                        label: 'List of Purchases',
-                                        data: count,
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255,99,132,1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
+                             ticks.push(data[i].date_init);
+                             s1.push(data[i].count);
+                             }
+                            // var ctx = $("#barChart");
+                            // var barChart = new Chart(ctx, {
+                            //     type: 'bar',
+                            //     data: {
+                            //         labels: date,
+                            //         datasets: [{
+                            //             label: 'List of Purchases',
+                            //             data: count,
+                            //             backgroundColor: [
+                            //                 'rgba(255, 99, 132, 0.2)',
+                            //                 'rgba(54, 162, 235, 0.2)',
+                            //                 'rgba(255, 206, 86, 0.2)',
+                            //                 'rgba(75, 192, 192, 0.2)',
+                            //                 'rgba(153, 102, 255, 0.2)',
+                            //                 'rgba(255, 159, 64, 0.2)'
+                            //             ],
+                            //             borderColor: [
+                            //                 'rgba(255,99,132,1)',
+                            //                 'rgba(54, 162, 235, 1)',
+                            //                 'rgba(255, 206, 86, 1)',
+                            //                 'rgba(75, 192, 192, 1)',
+                            //                 'rgba(153, 102, 255, 1)',
+                            //                 'rgba(255, 159, 64, 1)'
+                            //             ],
+                            //             borderWidth: 1
+                            //         }]
+                            //     },
+                            //     options: {
+                            //         scales: {
+                            //             yAxes: [{
+                            //                 ticks: {
+                            //                     beginAtZero:true
+                            //                 }
+                            //             }]
+                            //         }
+                            //     }
+                            // });
+                            $.jqplot.config.enablePlugins = true;
+                            plot1 = $.jqplot('chart1', [s1], {
+                                // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+                                animate: !$.jqplot.use_excanvas,
+                                seriesDefaults:{
+                                    renderer:$.jqplot.BarRenderer,
+                                    pointLabels: { show: true }
                                 },
-                                options: {
-                                    scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero:true
-                                            }
-                                        }]
+                                axes: {
+                                    xaxis: {
+                                        renderer: $.jqplot.CategoryAxisRenderer,
+                                        ticks: ticks
                                     }
-                                }
+                                },
+                                highlighter: { show: false }
                             });
+                         
+                            $('#chart1').bind('jqplotDataClick', 
+                                function (ev, seriesIndex, pointIndex, data) {
+                                    $('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+                                }
+                            );
                         }
                                                 },
                         error: function(data){
@@ -84,11 +110,6 @@
                       });
 });
   </script>
-<style type="text/css">
-#chartColor {
-    background-color: white;
-            }
-</style>
 
 </head>
 
@@ -136,7 +157,8 @@
     </nav>
 
 <div id="chartColor">
-    <canvas id="barChart"></canvas>
+    <!-- <canvas id="barChart"></canvas> -->
+    <center><div id="chart1"></div></center>
 </div><br><br>
 
 <div class="container">

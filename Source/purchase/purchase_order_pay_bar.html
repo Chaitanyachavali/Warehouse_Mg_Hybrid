@@ -22,7 +22,7 @@
       var dataString = 'user_id='+ user_id + '&product='+ product;
       $.ajax({
                       type: "POST",
-                      url: "http://172.19.20.172/client_sg/getPurchaseOrdersStatusGraph.php",
+                      url: "http://172.19.20.172/client_sg/getPurchaseOrdersPayGraph.php",
                       data: dataString,
                       cache: false,
                       success: function(result){
@@ -33,18 +33,17 @@
                         else
                         {
                             var data = JSON.parse(result);
-                            var s2 = [];
-                            // var count = [];
-                            // var i = 0;
+                            var ticks = [];
+                            var s1 = [];
+                            var i = 0;
                             for(i in data)
                             {
-                              s2.push("[" + "'" + data[i].date_init + "'" +"," + data[i].count + "]");
-                            }
-                            //console.log(s1);
-                            // //alert("Working till here");
-                            // var ctx = $("#pieChart");
-                            // var pieChart = new Chart(ctx, {
-                            //     type: 'pie',
+                             ticks.push(data[i].payment_method);
+                             s1.push(data[i].count);
+                             }
+                            // var ctx = $("#barChart");
+                            // var barChart = new Chart(ctx, {
+                            //     type: 'bar',
                             //     data: {
                             //         labels: date,
                             //         datasets: [{
@@ -79,31 +78,28 @@
                             //         }
                             //     }
                             // });
-                            var s1 = [['Delivered',3], ['Onway',3]];
-                            var plot8 = $.jqplot('pie8', [s1], {
-                            grid: {
-                                drawBorder: false, 
-                                drawGridlines: false,
-                                background: '#ffffff',
-                                shadow:false
-                            },
-                            axesDefaults: {
-                                 
-                            },
-                            seriesDefaults:{
-                                renderer:$.jqplot.PieRenderer,
-                                rendererOptions: {
-                                    showDataLabels: true
-                                }
-                            },
-                            legend: {
-                                show: true,
-                                rendererOptions: {
-                                    numberRows: 1
+                            $.jqplot.config.enablePlugins = true;
+                            plot1 = $.jqplot('chart1', [s1], {
+                                // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+                                animate: !$.jqplot.use_excanvas,
+                                seriesDefaults:{
+                                    renderer:$.jqplot.BarRenderer,
+                                    pointLabels: { show: true }
                                 },
-                                location: 's'
-                            }
-                        }); 
+                                axes: {
+                                    xaxis: {
+                                        renderer: $.jqplot.CategoryAxisRenderer,
+                                        ticks: ticks
+                                    }
+                                },
+                                highlighter: { show: false }
+                            });
+                         
+                            $('#chart1').bind('jqplotDataClick', 
+                                function (ev, seriesIndex, pointIndex, data) {
+                                    $('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+                                }
+                            );
                         }
                                                 },
                         error: function(data){
@@ -114,7 +110,7 @@
                       });
 });
   </script>
-  
+
 </head>
 
 <body background = "../img/check1.jpg">
@@ -134,7 +130,9 @@
             </div>
         </div>
   </div>
+
   <br>
+
 </div>
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -157,22 +155,23 @@
         </div>
       </div>
     </nav>
-    
-  <div id="chartColor">
-    <!-- <canvas id="pieChart"></canvas> -->
-    <center><div id="pie8""></div></div></center>
-  </div><br><br>
+
+<div id="chartColor">
+    <!-- <canvas id="barChart"></canvas> -->
+    <center><div id="chart1"></div></center>
+</div><br><br>
 
 <div class="container">
-    <a href="purchase_order_status_table.html" class="btn btn-primary btn-lg">
+    <a href="purchase_order_pay_table.html" class="btn btn-primary btn-lg">
       <span class="glyphicon glyphicon-list"></span> Check the reports as Tables
     </a> <br> <br>
-    <a href="purchase_order_status_bar.html" class="btn btn-primary btn-lg">
-      <span class="glyphicon glyphicon-stats"></span> Check the reports as Bar Charts
-    </a><br><br>
+    <a href="purchase_order_pay_pie.html" class="btn btn-primary btn-lg">
+      <span class="glyphicon glyphicon-dashboard"></span> Check the reports as Pie Charts
+    </a> <br> <br>
     <a href="purchase_order.html" class="btn btn-primary btn-lg">
        Go Back to Report Type
     </a> <br> <br>
 </div>
+
 </body>
 </html>
