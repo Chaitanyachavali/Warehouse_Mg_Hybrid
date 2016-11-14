@@ -16,7 +16,7 @@
       var dataString = 'user_id='+ user_id + '&product='+ product;
       $.ajax({
                       type: "POST",
-                      url: "http://172.19.20.172/client_sg/getPurchaseOrders.php",
+                      url: "http://172.19.20.172/client_sg/getSalesOrders.php",
                       data: dataString,
                       cache: false,
                       success: function(result){
@@ -26,17 +26,17 @@
                         }
                         else
                         {
-                          var purchase = JSON.parse(result);
+                          var sales = JSON.parse(result);
                           //alert(purchase.length);
-                          if(purchase.length > 0)
+                          if(sales.length > 0)
                           {
-                            for(i in purchase)
+                            for(i in sales)
                             {
                               var display_table = '<tr>'
-                                                  +'<td>'+purchase[i].purchase_id+'</td>'
-                                                  +'<td>'+purchase[i].date_init+'</td>'
-                                                  +'<td>'+purchase[i].order_status+'</td>'
-                                                  +'<td>'+purchase[i].purchase_by+'</td>'
+                                                  +'<td>'+sales[i].sales_id+'</td>'
+                                                  +'<td>'+sales[i].date_init+'</td>'
+                                                  +'<td>'+sales[i].selled_by+'</td>'
+                                                  +'<td>'+sales[i].date_recv+'</td>'
                                                   +'</tr>'; 
                             $('#tbody_display').append(display_table);
                            }
@@ -112,16 +112,16 @@
     
   <div class="container" id="display_table">
   <!-- <h2>Selected Product : ERP Product 1</h2> -->
-  <p>Purchase Order with Status (Table)</p>
+  <p>List of Sales Orders (Table)</p>
   <div id="displayTable">
   <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Purchase ID</th>
+        <th>Sales ID</th>
         <th>Date Initated</th>
-        <th>Order Status</th>
-        <th>Purchase By</th>
+        <th>Sold By</th>
+        <th>Date Recevied</th>
       </tr>
     </thead>
     <tbody id="tbody_display">
@@ -135,12 +135,13 @@
   </table>
   </div>
 </div>
-</div> <br> <br>
+</div>
+<br> <br>
 <div class="container">
-    <a href="purchase_order_status_pie.html" class="btn btn-primary btn-lg">
+    <a href="list_sales_order_pie.html" class="btn btn-primary btn-lg">
       <span class="glyphicon glyphicon-dashboard"></span> Check the reports as Pie Charts
     </a> <br> <br>
-    <a href="purchase_order_status_bar.html" class="btn btn-primary btn-lg">
+    <a href="list_sales_order_bar.html" class="btn btn-primary btn-lg">
       <span class="glyphicon glyphicon-stats"></span> Check the reports as Bar Charts
     </a> <br> <br>
     <a href="purchase_order.html" class="btn btn-primary btn-lg">

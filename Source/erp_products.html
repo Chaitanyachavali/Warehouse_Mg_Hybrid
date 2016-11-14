@@ -61,6 +61,12 @@
     });
   </script>
   <script type="text/javascript">
+    $(document).on("touchend", "#h3_name", function(){
+      var product = $(this).parents('#product_display').find('h3').text();
+      //alert(product);
+      window.localStorage.setItem('selected_product', product);
+      window.location.href = "product_details.html";
+    });
     $(document).on("click", "#h3_name", function(){
       var product = $(this).parents('#product_display').find('h3').text();
       //alert(product);

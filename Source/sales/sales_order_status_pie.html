@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Warehouse Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src="../js/jquery-3.1.0.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.jqplot.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.barRenderer.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.pieRenderer.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.categoryAxisRenderer.js"></script>
+  <script type="text/javascript" src="../plugins/jqplot.pointLabels.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/jquery.jqplot.css" />
+  <script type="text/javascript">
+     $(document).ready(function(){
+      var user_id = "temp";
+      var product = "temp";
+      user_id = window.localStorage.getItem('user_id');
+      product = window.localStorage.getItem('selected_product');
+      var dataString = 'user_id='+ user_id + '&product='+ product;
+      $.ajax({
+                      type: "POST",
+                      url: "http://172.19.20.172/client_sg/getSalesOrdersStatusGraph.php",
+                      data: dataString,
+                      cache: false,
+                      success: function(result){
+                      if(result == 'Invalid')
+                        {
+                          alert("Incorrect Values");
+                        }
+                        else
+                        {
+                            var data = JSON.parse(result);
+                            var s2 = [];
+                            // var count = [];
+                            // var i = 0;
+                            for(i in data)
+                            {
+                              s2.push("[" + "'" + data[i].date_init + "'" +"," + data[i].count + "]");
+                            }
+                            //console.log(s1);
+                            // //alert("Working till here");
+                            // var ctx = $("#pieChart");
+                            // var pieChart = new Chart(ctx, {
+                            //     type: 'pie',
+                            //     data: {
+                            //         labels: date,
+                            //         datasets: [{
+                            //             label: 'List of Purchases',
+                            //             data: count,
+                            //             backgroundColor: [
+                            //                 'rgba(255, 99, 132, 0.2)',
+                            //                 'rgba(54, 162, 235, 0.2)',
+                            //                 'rgba(255, 206, 86, 0.2)',
+                            //                 'rgba(75, 192, 192, 0.2)',
+                            //                 'rgba(153, 102, 255, 0.2)',
+                            //                 'rgba(255, 159, 64, 0.2)'
+                            //             ],
+                            //             borderColor: [
+                            //                 'rgba(255,99,132,1)',
+                            //                 'rgba(54, 162, 235, 1)',
+                            //                 'rgba(255, 206, 86, 1)',
+                            //                 'rgba(75, 192, 192, 1)',
+                            //                 'rgba(153, 102, 255, 1)',
+                            //                 'rgba(255, 159, 64, 1)'
+                            //             ],
+                            //             borderWidth: 1
+                            //         }]
+                            //     },
+                            //     options: {
+                            //         scales: {
+                            //             yAxes: [{
+                            //                 ticks: {
+                            //                     beginAtZero:true
+                            //                 }
+                            //             }]
+                            //         }
+                            //     }
+                            // });
+                            var s1 = [['Delivered',3], ['Onway',3]];
+                            var plot8 = $.jqplot('pie8', [s1], {
+                            grid: {
+                                drawBorder: false, 
+                                drawGridlines: false,
+                                background: '#ffffff',
+                                shadow:false
+                            },
+                            axesDefaults: {
+                                 
+                            },
+                            seriesDefaults:{
+                                renderer:$.jqplot.PieRenderer,
+                                rendererOptions: {
+                                    showDataLabels: true
+                                }
+                            },
+                            legend: {
+                                show: true,
+                                rendererOptions: {
+                                    numberRows: 1
+                                },
+                                location: 's'
+                            }
+                        }); 
+                        }
+                                                },
+                        error: function(data){
+                          
+                          alert("Unsufficient details. Not able to connect to server");
+
+                               }
+                      });
+});
+  </script>
+  
+</head>
+
+<body background = "../img/check1.jpg">
+<br>
+<div class="container">
+  <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container"> 
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control"  placeholder="Search" >
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>  
+                    </span>
+                </div>
+            </div>
+        </div>
+  </div>
+  <br>
+</div>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">HCL ERP</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../profile.html">Profile</a></li>
+            <li class="active" ><a href="../erp_products.html">Products</a></li>
+            <!-- <li><a href="#">Purchase Orders</a></li>
+            <li><a href="#">Sales Orders</a></li>
+            <li><a href="#">Warehouse Management</a></li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+  <div id="chartColor">
+    <!-- <canvas id="pieChart"></canvas> -->
+    <center><div id="pie8""></div></div></center>
+  </div><br><br>
+
+<div class="container">
+    <a href="sales_order_status_table.html" class="btn btn-primary btn-lg">
+      <span class="glyphicon glyphicon-list"></span> Check the reports as Tables
+    </a> <br> <br>
+    <a href="sales_order_status_bar.html" class="btn btn-primary btn-lg">
+      <span class="glyphicon glyphicon-stats"></span> Check the reports as Bar Charts
+    </a><br><br>
+    <a href="sales_order.html" class="btn btn-primary btn-lg">
+       Go Back to Report Type
+    </a> <br> <br>
+</div>
+</body>
+</html>

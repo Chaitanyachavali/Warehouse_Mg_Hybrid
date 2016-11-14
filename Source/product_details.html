@@ -16,7 +16,7 @@
       var dataString = 'user_id='+ user_id + '&product='+ product;
       $.ajax({
                       type: "POST",
-                      url: "http://172.19.20.172/client_sg/productDetails.php",
+                      url: "http://172.19.20.172/client_sg/getProductDetails.php",
                       data: dataString,
                       cache: false,
                       success: function(result){
