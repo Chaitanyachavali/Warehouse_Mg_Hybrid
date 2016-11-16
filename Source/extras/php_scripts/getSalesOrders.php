@@ -10,7 +10,7 @@ $product = $_POST['product'];
 
 if(isset($user_id) && isset($product))
 {
-	$query = "select date_init, COUNT(*) as count from whm_purchases where whm_purchases.product_name = '$product' group by date_init, product_name";
+	$query = "select * from warehouse_mg.whm_sales where product_name = '$product' ";
 
 	$output = mysql_query($query);
 
@@ -24,14 +24,7 @@ if(isset($user_id) && isset($product))
 			}
 		}
 
-		
-		//$rows = count($result_array);
-		
-		//var_dump($result_array);
-		
 		echo json_encode($result_array); 
-
-
 }
 
 else

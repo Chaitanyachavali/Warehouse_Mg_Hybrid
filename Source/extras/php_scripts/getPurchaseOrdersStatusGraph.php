@@ -10,7 +10,7 @@ $product = $_POST['product'];
 
 if(isset($user_id) && isset($product))
 {
-	$query = "select order_status,product_name, COUNT(*) as count from whm_purchases where whm_purchases.product_name = 'ERP Product 1' group by order_status, product_name";
+	$query = "select order_status, COUNT(*) as count from whm_purchases where whm_purchases.product_name = '$product' group by order_status, product_name";
 
 	$output = mysql_query($query);
 

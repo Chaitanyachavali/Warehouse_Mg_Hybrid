@@ -129,12 +129,11 @@
                         else
                         {
                             var data = JSON.parse(result);
-                            var s2 = [];
-                            // var count = [];
-                            // var i = 0;
+                            var x = [];
                             for(i in data)
                             {
-                              s2.push("[" + "'" + data[i].date_init + "'" +"," + data[i].count + "]");
+                              var temp = parseInt(data[i].count);
+                              x[i] = [data[i].payment_method, temp];
                             }
                             //console.log(s1);
                             // //alert("Working till here");
@@ -175,8 +174,8 @@
                             //         }
                             //     }
                             // });
-                            var s1 = [['Debit',3], ['Credit',3]];
-                            var plot8 = $.jqplot('pie8', [s1], {
+                            //var s1 = [['Debit',3], ['Credit',3]];
+                            var plot8 = $.jqplot('pie8', [x], {
                             grid: {
                                 drawBorder: false, 
                                 drawGridlines: false,
