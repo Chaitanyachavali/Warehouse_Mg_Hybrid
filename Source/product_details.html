@@ -9,6 +9,12 @@
   <script src="js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function(){
+      $("#include").load("server_add.html");
+      var getadd = "temp";
+      getadd = window.localStorage.getItem('add');
+      //alert(getadd);
+      var page = "getProductDetails.php";
+      var url_append = getadd.concat(page);
       var user_id = "temp";
       var product = "temp";
       user_id = window.localStorage.getItem('user_id');
@@ -16,7 +22,7 @@
       var dataString = 'user_id='+ user_id + '&product='+ product;
       $.ajax({
                       type: "POST",
-                      url: "http://172.19.20.172/client_sg/getProductDetails.php",
+                      url: url_append,
                       data: dataString,
                       cache: false,
                       success: function(result){
@@ -67,6 +73,7 @@
 </head>
 
 <body background = "img/check1.jpg">
+<div id="include"></div>
 <br>
 <div class="container">
   <div class="row">

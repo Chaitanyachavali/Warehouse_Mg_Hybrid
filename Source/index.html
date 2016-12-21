@@ -9,8 +9,14 @@
   <script src="js/bootstrap.min.js"></script>
   <script>
    $(document).ready(function(){
+    $("#include").load("server_add.html");
       $("#submit").click(function(){
-          //var getvar = "temp";
+          //var getvar = "temp";  
+          var getadd = "temp";
+          getadd = window.localStorage.getItem('add');
+          //alert(getadd);
+          var page = "login.php";
+          var url_append = getadd.concat(page);
           var user_id = $("#user_id").val();
           var password = $("#password").val();
           var role_id = $("#role_id").val();
@@ -23,7 +29,7 @@
             {
               $.ajax({
                       type: "POST",
-                      url: "http://172.19.20.172/client_sg/login.php",
+                      url: url_append,
                       data: dataString,
                       cache: false,
                       success: function(result){
@@ -54,7 +60,7 @@
   </script>
 </head>
 <body background = "img/check1.jpg">
-
+<div id="include"></div>
 <!-- Login Content Starts -->
 <div class="container">
     <br> <br>
